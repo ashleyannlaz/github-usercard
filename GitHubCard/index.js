@@ -72,7 +72,6 @@ axios.get('https://api.github.com/users/ashleyannlaz', {
 });
 
 const userDiv = document.querySelector('.cards')
-
 function myFun(object){
   const card = document.createElement('div');
   const cardImg = document.createElement('img');
@@ -123,12 +122,10 @@ const followersArray = [
   'luishrd',
   'bigknell',
 ];
-
 // loops through the followersArray
 followersArray.forEach(e => {
   cardArray(e);
 })
-
 // function that takes username as an argument and gets api data
 function cardArray(username) {
   axios.get(`https://api.github.com/users/${username}`, {
