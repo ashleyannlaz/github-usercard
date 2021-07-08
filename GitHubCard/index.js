@@ -55,7 +55,6 @@ import axios from 'axios';
     </div>
 */
 
-
 axios.get('https://api.github.com/users/ashleyannlaz', {
   params: {
     ID: 12345
@@ -72,41 +71,35 @@ axios.get('https://api.github.com/users/ashleyannlaz', {
   // always executed
 });
 
+const userDiv = document.querySelector('.cards')
+
 function myFun(object){
   const card = document.createElement('div');
-  card.classList.add('card');
-
   const cardImg = document.createElement('img');
-  cardImg.src = object.avatar_url;
-
   const cardInfo = document.createElement('div');
-  cardInfo.classList.add('card-info');
-
   const h3 = document.createElement('h3');
-  h3.classList.add('name');
-  h3.textContent = object.name;
-
   const userName = document.createElement('p');
-  userName.classList.add('username');
-  userName.textContent = object.login;
-
   const location = document.createElement('p');
-  location.textContent = `Location: ${object.location}` ;
-
   const profile = document.createElement('p');
-  profile.textContent = `Profile: `;
-
   const profileUrl = document.createElement('a');
+  const followers = document.createElement('p');
+  const following = document.createElement('p');
+  const bio = document.createElement('p');
+
+  card.classList.add('card');
+  cardInfo.classList.add('card-info');
+  h3.classList.add('name');
+  userName.classList.add('username');
+
+  cardImg.src = object.avatar_url;
+  h3.textContent = object.name;
+  userName.textContent = object.login;
+  location.textContent = `Location: ${object.location}` ;
+  profile.textContent = `Profile: `;
   profileUrl.textContent = object.html_url;
   profileUrl.href = object.html_url;
-
-  const followers = document.createElement('p');
   followers.textContent = `Followers: ${object.followers}`;
-
-  const following = document.createElement('p');
   following.textContent = `Following: ${object.following}`;
-
-  const bio = document.createElement('p');
   bio.textContent = `Bio: ${object.bio}`;
 
   card.appendChild(cardImg);
@@ -123,8 +116,6 @@ function myFun(object){
   return card;
 }
 
-const userDiv = document.querySelector('.cards')
-
 const followersArray = [
   'tetondan', 
   'dustinmyers', 
@@ -133,10 +124,12 @@ const followersArray = [
   'bigknell',
 ];
 
+// loops through the followersArray
 followersArray.forEach(e => {
   cardArray(e);
 })
 
+// function that takes username as an argument and gets api data
 function cardArray(username) {
   axios.get(`https://api.github.com/users/${username}`, {
   params: {
