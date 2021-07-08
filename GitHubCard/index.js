@@ -1,28 +1,15 @@
 
 import axios from 'axios';
 
-/*
+/* ------------------------------------- D O N E!
   STEP 1: using axios, send a GET request to the following URL
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
 
-axios.get('https://api.github.com/users/ashleyannlaz', {
-  params: {
-    ID: 12345
-  }
-})
-.then(function (response) {
-  console.log(response);
-})
-.catch(function (error) {
-  console.log(error);
-})
-.then(function () {
-  // always executed
-});
 
-/*
+
+/* ------------------------------------- D O N E!
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
     data in order to use it to build your component function
@@ -46,9 +33,9 @@ axios.get('https://api.github.com/users/ashleyannlaz', {
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
 
-/*
+
+/* ------------------------------------- D O N E!
   STEP 3: Create a function that accepts a single object as its only argument.
     Using DOM methods and properties, create and return the following markup:
 
@@ -68,11 +55,102 @@ const followersArray = [];
     </div>
 */
 
-/*
-  List of LS Instructors Github username's:
-    tetondan
-    dustinmyers
-    justsml
-    luishrd
-    bigknell
-*/
+
+axios.get('https://api.github.com/users/ashleyannlaz', {
+  params: {
+    ID: 12345
+  }
+})
+.then(function (response) {
+  userDiv.appendChild(myFun(response.data) )
+  console.log(response);
+})
+.catch(function (error) {
+  console.log(error);
+})
+.then(function () {
+  // always executed
+});
+
+function myFun(object){
+  const card = document.createElement('div');
+  card.classList.add('card');
+
+  const cardImg = document.createElement('img');
+  cardImg.src = object.avatar_url;
+
+  const cardInfo = document.createElement('div');
+  cardInfo.classList.add('card-info');
+
+  const h3 = document.createElement('h3');
+  h3.classList.add('name');
+  h3.textContent = object.name;
+
+  const userName = document.createElement('p');
+  userName.classList.add('username');
+  userName.textContent = object.login;
+
+  const location = document.createElement('p');
+  location.textContent = `Location: ${object.location}` ;
+
+  const profile = document.createElement('p');
+  profile.textContent = `Profile: `;
+
+  const profileUrl = document.createElement('a');
+  profileUrl.textContent = object.html_url;
+  profileUrl.href = object.html_url;
+
+  const followers = document.createElement('p');
+  followers.textContent = `Followers: ${object.followers}`;
+
+  const following = document.createElement('p');
+  following.textContent = `Following: ${object.following}`;
+
+  const bio = document.createElement('p');
+  bio.textContent = `Bio: ${object.bio}`;
+
+  card.appendChild(cardImg);
+  card.appendChild(cardInfo);
+  cardInfo.appendChild(h3);
+  cardInfo.appendChild(userName);
+  cardInfo.appendChild(location);
+  cardInfo.appendChild(profile);
+  profile.appendChild(profileUrl);
+  cardInfo.appendChild(followers);
+  cardInfo.appendChild(following);
+  cardInfo.appendChild(bio);
+
+  return card;
+}
+
+const userDiv = document.querySelector('.cards')
+
+const followersArray = [
+  'tetondan', 
+  'dustinmyers', 
+  'justsml', 
+  'luishrd',
+  'bigknell',
+];
+
+followersArray.forEach(e => {
+  cardArray(e);
+})
+
+function cardArray(username) {
+  axios.get(`https://api.github.com/users/${username}`, {
+  params: {
+    ID: 12345
+  }
+})
+.then(function (response) {
+  userDiv.appendChild(myFun(response.data) )
+})
+.catch(function (error) {
+  console.log(error);
+})
+.then(function () {
+  // always executed
+});
+}
+
